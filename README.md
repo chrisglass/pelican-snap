@@ -39,7 +39,7 @@ Login to the snap store with "snapcraft login", then push you new snap with
 The snap, once pushed, needs to be published to a "channel" (edge, beta,
 candidate, or stable). Feel free to use any mix of those for your own needs.
 
-  snapcraft publish <snap name> <snap revision> <channel>
+  snapcraft release <snap name> <snap revision> <channel>
 
 On the target machine, login to the snap store with:
 
