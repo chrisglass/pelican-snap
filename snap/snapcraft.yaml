@@ -1,0 +1,39 @@
+name: pelican-blog-server # You'll need to change this
+version: '1.0' # just for humans.
+summary: Your pelican blog shipped as a snap, with a caddy server
+description: |
+  This is your Pelican blog shipped in a snap, so that it auto-deploys when you
+  push a new version to the store. It is served by Caddy and runs in a
+  contained environment.
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # this enforces "plugs" for security.
+
+apps:
+  blog-server:
+    command: "bin/caddy -conf $SNAP/Caddyfile"
+    daemon: simple
+    plugs: [network-bind] # Only allowed to bind network, nothing else.
+
+parts:
+  caddy:
+    plugin: nil
+    install: |
+      wget "https://caddyserver.com/download/linux/amd64?plugins=http.expires&license=" -O caddy.tar.gz
+      tar xzf caddy.tar.gz
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp caddy $SNAPCRAFT_PART_INSTALL/bin
+  caddyfile:
+    plugin: nil
+    install: |
+      cp Caddyfile $SNAPCRAFT_PART_INSTALL/Caddyfile
+  blog-generation:
+    build-packages: [pelican]
+    plugin: make
+    build: |
+      make publish
+  blog-inclusion:
+    plugin: nil
+    install: |
+      cp -r output $SNAPCRAFT_PART_INSTALL/payload
+    after: [blog-generation]

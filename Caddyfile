@@ -1,0 +1,25 @@
+# You need to change the following line to be your site's FQDN.
+# When you do running the snap will trigger a letsencrypt certificate request.
+localhost:8080
+
+gzip
+root {$SNAP}/payload
+
+# Feel free to change those
+expires {
+    match .html$ 10i
+    match .js$ 2d
+    match .css$ 1w
+    match .gif$ 1m
+    match .png$ 1m
+    match .jpg$ 1m
+    match .jpeg$ 1m
+    match .woff$ 1y
+}
+
+header / {
+	Strict-Transport-Security "max-age=31536000;"
+	X-XSS-Protection "1; mode=block"
+	X-Content-Type-Options "nosniff"
+	X-Frame-Options "DENY"
+}
