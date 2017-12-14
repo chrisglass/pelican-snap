@@ -32,8 +32,4 @@ parts:
     plugin: make
     build: |
       make publish
-  blog-inclusion:
-    plugin: nil
-    install: |
       cp -r output $SNAPCRAFT_PART_INSTALL/payload
-    after: [blog-generation]
