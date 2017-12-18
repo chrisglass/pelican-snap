@@ -19,7 +19,7 @@ parts:
   caddy:
     plugin: nil
     install: |
-      wget "https://caddyserver.com/download/linux/amd64?plugins=http.expires&license=" -O caddy.tar.gz
+      wget --compression=none "https://caddyserver.com/download/linux/amd64?plugins=http.expires&license=" -O caddy.tar.gz
       tar xzf caddy.tar.gz
       mkdir -p $SNAPCRAFT_PART_INSTALL/bin
       cp caddy $SNAPCRAFT_PART_INSTALL/bin
